@@ -15,6 +15,16 @@ class Crawler:
     ):
         self.url = url
 
+    def setup(
+        self,
+        delay_time: int
+    ) -> WebDriver:
+        options = self.set_driver_option()
+        driver = webdriver.Chrome("noti/chromedriver", options=options)
+        driver.get(self.url)
+        driver.implicitly_wait(delay_time)
+        return driver
+
     def set_driver_option(self) -> webdriver.ChromeOptions:
         options = webdriver.ChromeOptions()
         options.add_argument('headless')
@@ -31,13 +41,3 @@ class Crawler:
             return 0
         number_of_stock = re.findall('\(([^)]+)', result)[0]
         return int(number_of_stock)
-
-    def setup(
-        self,
-        delay_time: int
-    ) -> WebDriver:
-        options = self.set_driver_option()
-        driver = webdriver.Chrome("noti/chromedriver", options=options)
-        driver.get(self.url)
-        driver.implicitly_wait(delay_time)
-        return driver

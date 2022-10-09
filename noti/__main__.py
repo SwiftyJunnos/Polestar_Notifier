@@ -1,7 +1,9 @@
 from .const import (
-    TELEGRAM_ID,
-    TELEGRAM_TOKEN,
     PRECONF_URL
+)
+from .secret import (
+    TELEGRAM_ID,
+    TELEGRAM_TOKEN
 )
 from .crawl import Crawler
 from .validate import validate_stock
@@ -21,6 +23,8 @@ def run():
     availables = crawler.check_stock(driver)
     if validate_stock(availables):
         print("Yes")
+    elif not validate_stock(availables):
+        print("No")
 
 if __name__ == "__main__":
     main()
