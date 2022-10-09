@@ -1,5 +1,6 @@
 from .const import (
-    AVAILABLE_XPATH
+    AVAILABLE_XPATH,
+    IMAGE_XPATH
 )
 
 import re
@@ -11,6 +12,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 class Crawler:
+    save_path = "noti/images"
+
     def __init__(
         self,
         url: str
@@ -48,10 +51,9 @@ class Crawler:
         self,
         driver: WebDriver
     ):
-        source_elements = driver.find_elements(By.XPATH, "//figure[@class='css-106exrd']/picture/source[@media='(min-width: 768px)']")
+        source_elements = driver.find_elements(By.XPATH, IMAGE_XPATH)
         for index, src in enumerate(source_elements[::2]):
             img_url = src.get_attribute('srcset').split()[0]
             t = urlopen(img_url).read()
-            save_path = "noti/images"
-            f = open(os.path.join(save_path, str(index + 1) + ".jpg"), "wb")
+            f = open(os.path.join(self.save_path, str(index + 1) + ".jpg"), "wb")
             f.write(t)
