@@ -1,11 +1,8 @@
 from .const import (
     PRECONF_URL
 )
-from .secret import (
-    TELEGRAM_ID,
-    TELEGRAM_TOKEN
-)
 from .crawl import Crawler
+from .polestar_DTO import Polestar
 from .validate import validate_stock
 
 import schedule
@@ -21,9 +18,11 @@ def run():
     driver = crawler.setup(10)
 
     availables = crawler.check_stock(driver)
+    print(f"{availables} cars Availabe now.")
     if validate_stock(availables):
         print("Yes")
-        crawler.get_image(driver)
+        infos = crawler.get_infos(driver, availables)
+        print(infos)
     elif not validate_stock(availables):
         print("No")
 
