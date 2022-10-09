@@ -3,6 +3,8 @@ from .const import (
 )
 
 import re
+import os
+from urllib.request import urlopen
 
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium import webdriver
@@ -34,10 +36,22 @@ class Crawler:
 
     def check_stock(
         self,
-        driver: webdriver
+        driver: WebDriver
     ) -> int:
         result = driver.find_element(By.XPATH, AVAILABLE_XPATH).text
         if result == None:
             return 0
         number_of_stock = re.findall('\(([^)]+)', result)[0]
         return int(number_of_stock)
+
+    def get_image(
+        self,
+        driver: WebDriver
+    ):
+        source_elements = driver.find_elements(By.XPATH, "//figure[@class='css-106exrd']/picture/source[@media='(min-width: 768px)']")
+        for index, src in enumerate(source_elements[::2]):
+            img_url = src.get_attribute('srcset').split()[0]
+            t = urlopen(img_url).read()
+            save_path = "noti/images"
+            f = open(os.path.join(save_path, str(index + 1) + ".jpg"), "wb")
+            f.write(t)

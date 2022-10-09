@@ -23,6 +23,7 @@ def run():
     availables = crawler.check_stock(driver)
     if validate_stock(availables):
         print("Yes")
+        crawler.get_image(driver)
     elif not validate_stock(availables):
         print("No")
 
