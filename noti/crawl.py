@@ -32,7 +32,7 @@ class Crawler:
         delay_time: int
     ) -> WebDriver:
         options = self.set_driver_option()
-        driver = webdriver.Chrome("noti/chromedriver", options=options)
+        driver = webdriver.Chrome("/usr/bin/chromedriver", options=options)
         driver.get(self.url)
         driver.implicitly_wait(delay_time)
         return driver
