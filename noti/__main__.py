@@ -55,7 +55,7 @@ class Updater:
         self.bot = bot
 
     def compare(self):
-        _LOGGER.info(f"{datetime.datetime.now()}: 이전과 옵션 개수가 같습니다.")
+        _LOGGER.info("이전과 옵션 개수가 같습니다.")
         
 
     def search_preconf(
@@ -82,6 +82,7 @@ class Updater:
         # 개수가 전과 다르면
         elif self.num_availables != currently_available_options:
             # 현재 프리컨 목록 전송
+            _LOGGER.info("새로운 옵션을 발견하였습니다. 텔레그램으로 전송합니다.")
             self.availables = crawler.get_infos(driver, currently_available_options)
             bot.sendInfo(currently_available_options, self.availables)
             self.num_availables = currently_available_options
