@@ -16,7 +16,6 @@ from selenium.webdriver.chrome.webdriver import WebDriver
 import schedule
 import time
 import datetime
-import logging
 
 SEARCH_DURATION = 3
 
