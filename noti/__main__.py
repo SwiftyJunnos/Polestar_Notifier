@@ -9,14 +9,18 @@ from .polestar_DTO import Polestar
 from .crawl import Crawler
 from .validate import validate_stock
 from .send import TelegramBot
+import log
 
 from selenium.webdriver.chrome.webdriver import WebDriver
 
 import schedule
 import time
 import datetime
+import logging
 
-SEARCH_DURATION = 5
+SEARCH_DURATION = 3
+
+_LOGGER = log.get_logger("runtime_logger")
 
 def main():
     crawler = Crawler(PRECONF_URL)
@@ -31,7 +35,7 @@ def main():
         updater.bot
     )
 
-    print("알리미 프로그램 시작")
+    _LOGGER.info("폴스타 알리미 프로그램 시작")
     while True:
         schedule.run_pending()
         time.sleep(SEARCH_DURATION * 60)
@@ -52,7 +56,8 @@ class Updater:
         self.bot = bot
 
     def compare(self):
-        print(f"{datetime.datetime.now()}: 이전과 옵션 개수가 같습니다.")
+        _LOGGER.info(f"{datetime.datetime.now()}: 이전과 옵션 개수가 같습니다.")
+        
 
     def search_preconf(
         self,
@@ -73,7 +78,7 @@ class Updater:
         if not validate_stock(currently_available_options):
             self.availables = []
             self.num_availables = 0
-            print("현재 구매 가능한 옵션이 없습니다.")
+            _LOGGER.info("현재 구매 가능한 옵션이 없습니다.")
             return
         # 개수가 전과 다르면
         elif self.num_availables != currently_available_options:
