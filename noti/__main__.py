@@ -19,7 +19,7 @@ import datetime
 
 SEARCH_DURATION = 3
 
-_LOGGER = log.get_logger("runtime_logger")
+_LOGGER = get_logger("runtime_logger")
 
 def main():
     crawler = Crawler(PRECONF_URL)
