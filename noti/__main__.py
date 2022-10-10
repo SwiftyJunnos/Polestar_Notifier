@@ -9,7 +9,7 @@ from .polestar_DTO import Polestar
 from .crawl import Crawler
 from .validate import validate_stock
 from .send import TelegramBot
-import log
+from .log import get_logger
 
 from selenium.webdriver.chrome.webdriver import WebDriver
 
